@@ -18,5 +18,5 @@ sudo docker build -t wguo/jboss-7.1.1:0.1 .
 
 ````
 
-[jdk rpm](http://vault.centos.org/centos/7.0.1406/updates/x86_64/Packages/)
+[jdk rpm](http://vault.centos.org/centos/7.0.1406/updates/x86_64/Packages/)  
 [jboss]()
