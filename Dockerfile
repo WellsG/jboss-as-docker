@@ -2,7 +2,7 @@ FROM jboss/base:latest
 
 User root
 
-RUN yum -y install wget openssh-clients vim && \
+RUN yum -y install wget httpd openssh-clients vim && \
 yum clean all
 
 COPY jdk/*.rpm /opt/
@@ -14,8 +14,14 @@ rm /opt/java*.rpm
 COPY jboss/* /opt/
 RUN unzip /opt/jboss-as-7.1.1.Final.zip
 
+EXPOSE 80
 EXPOSE 8080
 EXPOSE 9990
 
 #CMD ["/opt/jboss/jboss-as-7.1.1.Final/bin/standalone.sh", "-b", "0.0.0.0"]
-CMD ["tail", "-f", "/dev/null"]
+#CMD ["tail", "-f", "/dev/null"]
+
+ADD run-httpd.sh /run-httpd.sh
+RUN chmod -v +x /run-httpd.sh
+
+CMD ["/run-httpd.sh"]
