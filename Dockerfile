@@ -6,25 +6,22 @@ ENV jboss_version jboss-as-7.1.1.Final
 
 User root
 
-RUN yum -y install wget httpd openssh-clients vim && \
+RUN yum -y install wget && \
     yum clean all
 
-#COPY jdk/*.rpm /opt/
 RUN wget -O /opt/java-1.7.0-openjdk-headless.x86_64.rpm ${jdk_repo}/java-1.7.0-openjdk-headless-${jdk_vr}.x86_64.rpm && \
     wget -O /opt/java-1.7.0-openjdk.x86_64.rpm ${jdk_repo}/java-1.7.0-openjdk-${jdk_vr}.x86_64.rpm && \
     wget -O /opt/java-1.7.0-openjdk-devel.x86_64.rpm ${jdk_repo}/java-1.7.0-openjdk-devel-${jdk_vr}.x86_64.rpm && \
     yum install -y /opt/java-1.7.0-openjdk-headless.x86_64.rpm && \
     yum install -y /opt/java-1.7.0-openjdk.x86_64.rpm && \
     yum install -y /opt/java-1.7.0-openjdk-devel.x86_64.rpm && \
+    yum clean all && \
     rm /opt/java*.rpm
 
-#COPY jboss/* /opt/
 RUN wget -O /opt/${jboss_version}.zip http://download.jboss.org/jbossas/7.1/${jboss_version}/${jboss_version}.zip && \
-    unzip /opt/${jboss_version}.zip
+    unzip /opt/${jboss_version}.zip && \
+    rm /opt/${jboss_version}.zip
 
 EXPOSE 80 8080 9990
 
-ADD run-httpd.sh /run-httpd.sh
-RUN chmod -v +x /run-httpd.sh
-
-CMD ["/run-httpd.sh"]
+CMD ["tail", "-f", "/dev/null"]
